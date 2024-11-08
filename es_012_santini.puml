@@ -1,0 +1,22 @@
+@startuml 
+
+class auto {
+    +marca 
+    +modello
+
+    +get_marca() ->str
+    +set_marca(marca: str)->none
+    +get_modello() ->str
+    +set_modello(modello: str)->none
+}
+class motore{
+    +numero_seriale
+    +tipo 
+
+    +get_numero_seriale() ->str
+    +set_numero_seriale(numero_seriale: str)->none
+    +get_tipo() ->str
+    +set_tipo(tipo: str)->none
+}
+
+
