@@ -1,50 +1,53 @@
 ```mermaid
 classDiagram
+
+	class Biblioteca {
+		autori : list[Autore]
+		libri : list[Libro]
+		utenti : list[Utente]
+
+		aggiungi_libro(libro : Libro) bool
+		aggiungi_utente(utente : Utente) bool
+		presta_libro(libro : Libro, utente : Utente, data : date) bool
+		restituisci_libro(libro : Libro, data : date) bool
+		libri_disponibili(libro : Libro) list[Libro]
+		ottieni_libri() list[Libro]
+		ottieni_utenti() list[Utente]
+		cerca_libri_per_autore(autore : Autore) list[Libro]
+		cerca_libro_per_titolo(titolo : str) list[Libro]
+	}
+
+	class Persona {
+		- nome : str
+		- cognome : str
+	}
+
+	class Utente {
+		- lista_libri : list[Libro]
+	}
+
 	class Libro {
 		- titolo : str
 		- data_pubblicazione : date
 		- autore : Autore
-		- utente : Utente
+		- utente_attuale : Utente
 		- data_prestito : date
-		+ isDisponibile() bool
-		+ assegna_utente(utente : Utente, data : date) None
-		+ restituisci(data : date) : None
-		+ get_titolo() : str
-	}
-
-	class Utente {
-		- nome : str
-		- cognome : str
-		- libri_prestito : list[Libro]
-		+ prendi_libro(libro : Libro) bool
+		- data_restituzione : date
 	}
 
 	class Autore {
-		- nome : str
-		- cognome : str
-		- libri : list[Libro]
-		+ autore_di(libro : Libro) bool
-		+ scrivi_libro(libro : Libro) bool
+		- libri_scritti : list[Libro]
 	}
 
-	class Biblioteca {
-		- libri : list[Libro]
-		- utenti : list[Utente]
-		- autori : list[Autore]
-		+ aggiungi_libro(libro : Libro) bool
-		+ aggiungi_utente(utente : Utente) bool
-		+ aggiungi_autore(autore : Autore) bool
-		+ presta_libro(libro : Libro, utente : Utente, data : date) None
-		+ ritira_libro(libro : Libro, utente : Utente, data : date) None
-		+ libri_disponibili( ) list[Libro]
-		+ cerca_libri_per_autore(autore : Autore) list[Libro]
-		+ cerca_libro_per_titolo(titolo : str) list[Libro]
-		+ ottieni_libri() list[Libro]
-		+ ottieni_utenti() list[Utenti]
-	}
+	Autore "1" -- "*" Libro : scrive
+	Utente "*" -- "*" Libro : prende in prestito
 
-	Libro "*" --> "1" Autore : ha
-	Libro "*" <-- "1" Biblioteca : contiene
-	Utente "*" --> "1" Biblioteca : si registra
-	Libro "*" <-- "*" Utente : prende in prestito
+	Persona <|-- Utente
+	Persona <|-- Autore
+
+
+	Biblioteca "1" -- "*" Libro : contiene
+	Biblioteca "1" -- "*" Utente : iscritti
+
+
 ```
